@@ -18,23 +18,24 @@ export const LoginForm: React.FC<LoginFormProps> = ({
   handleSubmit,
 }) => {
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit} className="space-y-6 bg-transparent">
       <div>
-        <label htmlFor="username" className="block text-sm font-medium text-gray-700">
-          Username
+        <label htmlFor="username" className="block text-sm font-medium text-white">
+          Email:
         </label>
         <input
           type="text"
           id="username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
-          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          className="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-sm focus:outline-none focus:ring-2 focus:ring-red-400 focus:border-transparent transition-colors duration-200 ease-in-out"
+          placeholder="Enter your Email"
           required
         />
       </div>
 
       <div>
-        <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="password" className="block text-sm font-medium text-white">
           Password
         </label>
         <input
@@ -42,17 +43,20 @@ export const LoginForm: React.FC<LoginFormProps> = ({
           id="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          className="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-sm focus:outline-none focus:ring-2 focus:ring-red-400 focus:border-transparent transition-colors duration-200 ease-in-out"
+          placeholder="Enter your password"
           required
         />
       </div>
 
-      <button
-        type="submit"
-        className="w-full py-2 px-4 bg-blue-500 text-white font-semibold rounded-md shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-      >
-        Log In
-      </button>
+      <div className="flex justify-center">
+        <button
+          type="submit"
+          className="w-40 py-2 px-4 bg-red-500 text-white font-semibold rounded-lg shadow-lg hover:bg-red-600 hover:scale-105 hover:shadow-xl transition-all duration-300 ease-in-out"
+        >
+          Log In
+        </button>
+      </div>
     </form>
   );
 };
