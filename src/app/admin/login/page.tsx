@@ -1,31 +1,52 @@
-// src/app/admin/login/page.tsx
-
 "use client";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { useRouter } from "next/navigation"; // Import useRouter for redirection
 import { supabase } from "@/app/utils/supabaseClient";
 import { LoginForm } from "@/app/components/LoginForm";
 
 const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const router = useRouter(); // Initialize useRouter for redirection
+  const router = useRouter(); // Initialize router
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({
+      // Authenticate the user
+      const { error } = await supabase.auth.signInWithPassword({
         email: username,
         password,
       });
 
       if (error) throw error;
 
-      // Redirect to the dashboard on successful login
-      router.push("/admin/dashboard");
+      // Fetch the user's role from the users table
+      const { data: userData, error: userError } = await supabase
+        .from("users")
+        .select("role")
+        .eq("email", username)
+        .single();
 
-    } catch (error) {
-      console.error("Error logging in:", (error as Error).message);
+      if (userError) throw userError;
+
+      // Redirect based on role
+      if (userData?.role === "admin") {
+        router.push("/admin/dashboard");
+      } else if (userData?.role === "head") {
+        router.push("/head/dashboard");
+      } else if (userData?.role === "subhead") {
+        router.push("/subhead/dashboard");
+      } else {
+        throw new Error("Unauthorized role");
+      }
+
+      console.log("Logged in successfully");
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error("Error logging in:", error.message);
+      } else {
+        console.error("An unknown error occurred");
+      }
     }
   };
 
