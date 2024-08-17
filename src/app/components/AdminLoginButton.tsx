@@ -1,4 +1,4 @@
-// src/app/components/AdminLoginButton.tsx
+
 import Link from "next/link";
 
 export const AdminLoginButton = () => {
